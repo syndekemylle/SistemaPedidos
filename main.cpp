@@ -4,9 +4,18 @@
 
 using namespace std;
 
-//Aqui implementei a estrutura do sistema: o polimorfismo cuida das diferenças entre usuários e produtos, as regras 
-//de negócio garantem as validações de pedido e limites de itens, 
-//e a classe de pedido faz a integração de tudo isso calculando 
+enum StatusPedido {
+  CRIADO,
+  FECHADO,
+  PAGO,
+  ENVIADO,
+  ENTREGUE,
+  CANCELADO
+};
+
+//Aqui implementei a estrutura do sistema: o polimorfismo cuida das diferenças entre usuários e produtos, as regras
+//de negócio garantem as validações de pedido e limites de itens,
+//e a classe de pedido faz a integração de tudo isso calculando
 //o valor final com base nessas regras. Ass. Noronha :P
 
 // Polimorfismo 1: Usuario e tipos de usuario
@@ -71,7 +80,7 @@ private:
 public:
     Bebida(string n, double p, bool gelo) : Produto(n, p) { comGelo = gelo; }
     double calcularTotal() override {
-        // Regra: Gelo custa extra
+        // Regra 4: Gelo custa extra
         if (comGelo) return preco + 1.0;
         return preco;
     }
@@ -82,27 +91,27 @@ class Pedido {
 private:
     Usuario* cliente;
     vector<Produto*> itens;
-    bool fechado;
+    StatusPedido status;
 public:
-    Pedido(Usuario* c) { cliente = c; fechado = false; }
-    
+    Pedido(Usuario* c) { cliente = c; status = CRIADO; }
+
     void adicionarProduto(Produto* p) {
-        // Regra 4: Nao altera pedido fechado
-        if (fechado) return;
+        // Regra 5: Nao altera pedido fechado
+        if (status != CRIADO) return;
         // Regra 5: Nao adiciona se indisponivel
         if (!p->isDisponivel()) return;
         itens.push_back(p);
     }
-    
+
     void finalizar() {
-        if (itens.empty() || fechado) return; 
-        fechado = true;
-        
+        if (itens.empty() || status != CRIADO) return;
+        status = FECHADO;
+
         double total = 0;
         for (int i = 0; i < itens.size(); i++) {
             total += itens[i]->calcularTotal();
         }
-        
+
         double final = total - cliente->obterDesconto(total);
         cout << "Pedido finalizado. Total: R$ " << final << endl;
     }
