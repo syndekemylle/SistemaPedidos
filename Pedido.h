@@ -61,21 +61,21 @@ public:
     }
 
     void pagarPedido() {
-        // Verificar e lancar exeção
+        // Verificar e lancar exceção
         if (status != FECHADO) throw EstadoPedidoException("Erro: O pedido so pode ser pago se estiver FECHADO.");
         status = PAGO;
         cout << "Pagamento confirmado!" << endl;
     }
 
     void enviarPedido() {
-        // Verificar e lancar exeção
+        // Verificar e lancar exceção
         if (status != PAGO) throw EstadoPedidoException("Erro: O pedido precisa estar PAGO para ser enviado.");
         status = ENVIADO;
         cout << "Pedido saiu para entrega!" << endl;
     }
 
     void entregarPedido() {
-        //Verificar e lancar exeção
+        //Verificar e lancar exceção
         if (status != ENVIADO) throw EstadoPedidoException("Erro: O pedido precisa estar ENVIADO para ser entregue.");
         status = ENTREGUE;
         cout << "\n=> PEDIDO ENTREGUE! Bom apetite!" << endl;
