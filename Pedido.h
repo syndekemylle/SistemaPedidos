@@ -5,7 +5,7 @@
 #include "Excecoes.h"
 
 using namespace std;
-
+//Possiveis estados do pedido.
 enum StatusPedido {
   CRIADO,
   FECHADO,
@@ -14,6 +14,12 @@ enum StatusPedido {
   ENTREGUE,
   CANCELADO
 };
+
+// A classe Pedido gerencia os itens do carrinho e impede que o fluxo 
+// seja burlado. Usamos as exceções personalizadas para garantir que 
+// uma transição de estado só aconteça na ordem cronológica correta 
+// (ex: não dá pra enviar um pedido que não foi pago).
+// Ass. Guilherme Arboés
 
 // Interação e Regras de Estado
 class Pedido {
@@ -59,7 +65,7 @@ public:
         cout << "------------------------\n" << endl;
         cout << "Pedido fechado!" << endl;
     }
-
+    // Regras de bloqueio de estados nas funções abaixo
     void pagarPedido() {
         // Verificar e lancar exceção
         if (status != FECHADO) throw EstadoPedidoException("Erro: O pedido so pode ser pago se estiver FECHADO.");
