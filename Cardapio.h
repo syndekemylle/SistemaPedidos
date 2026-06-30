@@ -85,3 +85,12 @@ public:
         return preco;
     }
 };
+
+class Petisco : public Produto {
+public:
+    Petisco(string n, double p) : Produto(n, p) {}
+
+    double calcularTotal() override {
+        return preco;
+    }
+};
