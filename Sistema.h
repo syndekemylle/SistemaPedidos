@@ -29,10 +29,30 @@ public:
             cout << "Sem produtos no momento..." << endl;
             return;
         }
+        // Cataloga apenas os lanches.
+        cout << "\n[ LANCHES ]" << endl;
         for (int i = 0; i < listaDeProdutos.size(); i++) {
-            cout << i << " -> " << *listaDeProdutos[i] << endl; 
+            if (dynamic_cast<Lanche*>(listaDeProdutos[i]) != NULL) {
+                cout << i << " -> " << *listaDeProdutos[i] << endl; 
+            }
         }
-        cout << "------------------------------\n" << endl;
+
+        // Cataloga apenas os Petiscos
+        cout << "\n[ PETISCOS ]" << endl;
+        for (int i = 0; i < listaDeProdutos.size(); i++) {
+            if (dynamic_cast<Petisco*>(listaDeProdutos[i]) != NULL) {
+                cout << i << " -> " << *listaDeProdutos[i] << endl; 
+            }
+        }
+
+        // Cataloga apenas as Bebidas
+        cout << "\n[ BEBIDAS ]" << endl;
+        for (int i = 0; i < listaDeProdutos.size(); i++) {
+            if (dynamic_cast<Bebida*>(listaDeProdutos[i]) != NULL) {
+                cout << i << " -> " << *listaDeProdutos[i] << endl; 
+            }
+        }
+        cout << "\n------------------------------\n" << endl;
     }
 
     Produto* selecionarProduto(int indice) {
@@ -49,11 +69,22 @@ private:
     Estoque meuEstoque;
     Pedido* meuPedido;
     Usuario* userLogado;
-
+    // Implementaçãos dos produtos disponiveis para compra.
     void inicializarDados() {
         meuEstoque.cadastrarProduto(new Lanche("Hamburguer Simples", 15.00));
-        meuEstoque.cadastrarProduto(new Bebida("Coca-Cola", 5.00, true));
         meuEstoque.cadastrarProduto(new Lanche("X-Tudo", 25.00));
+        meuEstoque.cadastrarProduto(new Lanche("Lanche Kids", 10.00));
+        meuEstoque.cadastrarProduto(new Lanche("Hamburger Vegano", 27.50));
+        meuEstoque.cadastrarProduto(new Petisco("Batata Frita", 12.00));
+        meuEstoque.cadastrarProduto(new Petisco("Macaxeira Frita", 10.00));
+        meuEstoque.cadastrarProduto(new Petisco("Cubos de Frango", 18.00));
+        meuEstoque.cadastrarProduto(new Bebida("Coca-Cola - Lata 350ml", 5.00, true));
+        meuEstoque.cadastrarProduto(new Bebida("Guaraná - Lata 350ml", 5.00, true));
+        meuEstoque.cadastrarProduto(new Bebida("Água (sem gás)", 1.50, true));
+        meuEstoque.cadastrarProduto(new Bebida("Água (com gás)", 3.00, true));
+        meuEstoque.cadastrarProduto(new Bebida("Cerveja", 6.50, true));
+        meuEstoque.cadastrarProduto(new Bebida("Cerveja (sem álcool)", 7.00, true));
+
     }
 
 public:
@@ -62,7 +93,7 @@ public:
         userLogado = NULL;
         inicializarDados();
     }
-
+    // Destrutor
     ~Sistema() {
         if(meuPedido != NULL) delete meuPedido;
         if(userLogado != NULL) delete userLogado;
@@ -70,6 +101,7 @@ public:
 
     void iniciarTerminal() {
         string nomeDoCliente;
+        // Registrar o cliente.
         cout << "Qual seu nome pra gente anotar o pedido? ";
         getline(cin, nomeDoCliente);
         // Verificar se o usuário é um funcionário.
@@ -86,10 +118,8 @@ public:
         }
 
         int esc = 0;
-
-        // Voltamos para 5 opcoes no menu, fica mais limpo!
         while (esc != 5) {
-            cout << "\n MENU PRINCIPAL " << endl;
+            cout << "\n -Hamburgueria++- \n [MENU PRINCIPAL] " << endl;
             cout << "1 Olhar o cardapio" << endl;
             cout << "2 Abrir comanda" << endl;
             cout << "3 Pedir" << endl;
@@ -131,6 +161,7 @@ public:
                         
                         Lanche* lancheCast = dynamic_cast<Lanche*>(selecionado);
                         Bebida* bebidaCast = dynamic_cast<Bebida*>(selecionado);
+                        // Adicional de carne, apenas em lanches.
                         if (lancheCast != NULL) {
                             char querAdicional;
                             cout << "Deseja colocar o adicional de carne?  R$ 2.00 (s/n): ";
@@ -142,7 +173,7 @@ public:
                                 cin >> querAdicional;
                             }
                         }else if (bebidaCast != NULL) {
-                            // --- NOVA PARTE: Adicional de gelo ---
+                            // Adicional de gelo, apenas bebidas.
                             char querGelo;
                             cout << "E uma bebida! Vai querer gelo por R$ 1.00 a mais? (s/n): ";
                             cin >> querGelo;
