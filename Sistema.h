@@ -79,11 +79,11 @@ private:
         meuEstoque.cadastrarProduto(new Petisco("Macaxeira Frita", 10.00));
         meuEstoque.cadastrarProduto(new Petisco("Cubos de Frango", 18.00));
         meuEstoque.cadastrarProduto(new Bebida("Coca-Cola - Lata 350ml", 5.00, true));
-        meuEstoque.cadastrarProduto(new Bebida("Guaraná - Lata 350ml", 5.00, true));
-        meuEstoque.cadastrarProduto(new Bebida("Água (sem gás)", 1.50, true));
-        meuEstoque.cadastrarProduto(new Bebida("Água (com gás)", 3.00, true));
+        meuEstoque.cadastrarProduto(new Bebida("Guarana - Lata 350ml", 5.00, true));
+        meuEstoque.cadastrarProduto(new Bebida("Agua (sem gas)", 1.50, true));
+        meuEstoque.cadastrarProduto(new Bebida("Agua (com gas)", 3.00, true));
         meuEstoque.cadastrarProduto(new Bebida("Cerveja", 6.50, true));
-        meuEstoque.cadastrarProduto(new Bebida("Cerveja (sem álcool)", 7.00, true));
+        meuEstoque.cadastrarProduto(new Bebida("Cerveja (sem alcool)", 7.00, true));
 
     }
 
@@ -106,20 +106,20 @@ public:
         getline(cin, nomeDoCliente);
         // Verificar se o usuário é um funcionário.
         char tipoUser;
-        cout << "É funcionario do restaurante? (s/n): ";
+        cout << "E funcionario do restaurante? (s/n): ";
         cin >> tipoUser;
 
         if (tipoUser == 's' || tipoUser == 'S') {
             userLogado = new Funcionario(nomeDoCliente);
-            cout << "\nOlá " << userLogado->getNome() << ", bom turno! (Desconto de 20% ativado)" << endl;
+            cout << "\nOla " << userLogado->getNome() << ", bom turno! (Desconto de 20% ativado)" << endl;
         } else {
             userLogado = new Cliente(nomeDoCliente);
-            cout << "\nOlá " << userLogado->getNome() << ", bem-vindo!" << endl;
+            cout << "\nOla " << userLogado->getNome() << ", bem-vindo!" << endl;
         }
 
         int esc = 0;
         while (esc != 5) {
-            cout << "\n -Hamburgueria++- \n [MENU PRINCIPAL] " << endl;
+            cout << "\n [Hamburgueria++] \n [MENU PRINCIPAL] " << endl;
             cout << "1 Olhar o cardapio" << endl;
             cout << "2 Abrir comanda" << endl;
             cout << "3 Pedir" << endl;
@@ -175,7 +175,7 @@ public:
                         }else if (bebidaCast != NULL) {
                             // Adicional de gelo, apenas bebidas.
                             char querGelo;
-                            cout << "E uma bebida! Vai querer gelo por R$ 1.00 a mais? (s/n): ";
+                            cout << "Vai querer gelo por R$ 1.00 a mais? (s/n): ";
                             cin >> querGelo;
                             
                             if (querGelo == 's' || querGelo == 'S') {
